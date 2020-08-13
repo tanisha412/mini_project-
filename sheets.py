@@ -21,6 +21,7 @@ for x in email_list:
         unique_email_list.append(x)
 
 unique_email_list.remove("Mail of that person")
+unique_email_list.remove("")
 
 for x in unique_email_list:
     cell_list = worksheet.findall(x)
@@ -42,7 +43,7 @@ for x in unique_email_list:
             # print('input Image available')
             ImageId = Row[6].split("=")
             ImageUrl = 'https://drive.google.com/uc?id='+ImageId[1]+'&export=download'
-            print(ImageUrl)
+            # print(ImageUrl)
         else:
              # print('Image not available')
             ImageUrl = 'https://drive.google.com/uc?id=1oC6ASFi-dOue4l6yc2ADbcVcBX-cYtey&export=download'
