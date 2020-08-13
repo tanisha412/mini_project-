@@ -39,6 +39,7 @@ for x in unique_email_list:
     
     for row in person['at_rows'] :
         Row = worksheet.row_values(row)
+        worksheet.update_cell(row,8, 'mailed')
         if len(Row) >= 7 :
             # print('input Image available')
             ImageId = Row[6].split("=")
