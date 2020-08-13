@@ -1,2 +1,2 @@
-EMAIL_USER = ''
-EMAIL_PASS = ''
+EMAIL_USER = 'atilondiya@gmail.com'
+EMAIL_PASS = 'demvsmxxmpzoeinq'

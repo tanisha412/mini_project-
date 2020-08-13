@@ -1,79 +1,114 @@
-<meta charset="UTF-8">
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Card Recipe</title>
-   
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+    <!-- Reset styles -->
+    <link rel="stylesheet" href="https://unpkg.com/modern-css-reset/dist/reset.min.css" />
+    <!-- Google Fonts Muli -->
+    <link href="https://fonts.googleapis.com/css2?family=Muli:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+        integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+
+    <style>
+        .wrapper {
+            min-height: 100vh;
+            color: #000;
+            font-family: 'Muli', sans-serif;
+            font-size: 1rem;
+            background-color: #F1E8E6;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card {
+            box-sizing: border-box;
+            background-color: #fff;
+            padding: 1em;
+            margin:20px;
+            border-radius: 1em;
+            max-width: 768px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            -webkit-box-shadow: 0px 17px 34px -20px #f55951;
+            box-shadow: 0px 17px 34px -20px #f55951;
+        }
+
+        .card img {
+            border-radius: 0.5em;
+            -o-object-fit: cover;
+            object-fit: cover;
+            height: 250px;
+            width: 200px;
+        }
+
+        .card__container {
+            position: relative;
+            -webkit-box-flex: 2;
+            -ms-flex-positive: 2;
+            flex-grow: 2;
+            margin-left: 1.4em;
+        }
+
+        .card__title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0.7em 0;
+        }
+
+        .card__text {
+            font-size: 1rem;
+            margin-bottom: 0.8em;
+            margin-right: 5em;
+            width: 33ch;
+        }
+    </style>
+
+
+</head>
+
+<body>
     <section class="wrapper">
         <div class="card">
+            <h1>Hey! Anshul you have some new scribbles</h1>
+        </div>
+        <div class="card">
             <figure>
-                <img src="https://images.unsplash.com/photo-1546793665-c74683f339c1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80" alt="salad">
+                <img src='https://drive.google.com/uc?id=1oC6ASFi-dOue4l6yc2ADbcVcBX-cYtey&export=download' alt="salad">
             </figure>
-  <style>
-    .wrapper {
-  min-height: 50vh;
-  color: #000;
-  font-family: 'Muli', sans-serif;
-  background-color: #F1E8E6;
-  place-items: center;
-}
-
-.card {
-  background-color: #fff;
-  padding: 1em;
-  border-radius: 1em;
-  max-width: 550px;
-  display: flex;
-  margin-left: 350px;
- 
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-shadow: 0px 17px 34px -20px #f55951;
-          box-shadow: 0px 17px 34px -20px #f55951;
-}
-
-.card img {
-  border-radius: 0.5em;
-  -o-object-fit: cover;
-     object-fit: cover;
-  height: 250px;
-  width: 200px;
-}
-
-.card__container {
-  position: relative;
-  -webkit-box-flex: 2;
-      -ms-flex-positive: 2;
-          flex-grow: 2;
-  margin-left: 1.4em;
-}
-
-.card__title {
-  font-size: 1.6rem;
-  font-weight: 700;
-  margin: 0.7em 0;
-}
-
-.card__text {
-  font-size: rem;
-  margin-bottom: 5em;
-  margin-right: 5em;
-  margin-top: 5em;
-  width: 33ch;
-}
-.card__end{
-  font-size:1.6rem;
-  font-weight: 700;
-  margin: 0.7em 0;
-  
-}
-          </style>
-    
             <div class="card__container">
-          
-                <p class="card__title">To Name </p>
-                <p class="card__text">Message </p>
-              <p class = "card__end"> From Name</P>
-                </div>
+                <p class="card__title"> From : </p>
+                <p class="card__text">message</p>
+            </div>
+        </div>
+        <div class="card">
+            <figure>
+                <img src='https://drive.google.com/uc?id=1oC6ASFi-dOue4l6yc2ADbcVcBX-cYtey&export=download' alt="salad">
+            </figure>
+            <div class="card__container">
+                <p class="card__title"> From : </p>
+                <p class="card__text">message</p>
+            </div>
+        </div>
+        <div class="card">
+            <figure>
+                <img src='https://drive.google.com/uc?id=1oC6ASFi-dOue4l6yc2ADbcVcBX-cYtey&export=download' alt="salad">
+            </figure>
+            <div class="card__container">
+                <p class="card__title"> From : </p>
+                <p class="card__text">message</p>
             </div>
         </div>
     </section>
+
+    <body>
+        <html>
