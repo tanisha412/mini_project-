@@ -647,7 +647,7 @@ for x in unique_email_list:
       smtp.login(EMAIL_ADDRESS , EMAIL_PASSWORD)
       smtp.send_message(msg)
     
-    print('mailed')
+    print('mailed to '+ str(person['email']))
 
 
 
