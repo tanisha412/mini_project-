@@ -39,7 +39,6 @@ for x in unique_email_list:
     
     for row in person['at_rows'] :
         Row = worksheet.row_values(row)
-        worksheet.update_cell(row,8, 'mailed')
         if len(Row) >= 7 :
             # print('input Image available')
             ImageId = Row[6].split("=")
@@ -49,6 +48,7 @@ for x in unique_email_list:
              # print('Image not available')
             ImageUrl = 'https://drive.google.com/uc?id=1oC6ASFi-dOue4l6yc2ADbcVcBX-cYtey&export=download'
 
+        worksheet.update_cell(row,8, 'mailed')
         scribble = {
             'Sender' : Row[2],
             'Receiver' : Row[3],
