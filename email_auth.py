@@ -1,2 +1,2 @@
-EMAIL_USER = 'atilondiya@gmail.com'
-EMAIL_PASS = 'demvsmxxmpzoeinq'
+EMAIL_USER = 'secy_das@iitj.ac.in'
+EMAIL_PASS = 'ixaolsdielfwnawr'

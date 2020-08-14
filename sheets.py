@@ -12,16 +12,17 @@ gc = gspread.service_account(filename='google_auth.json')
 sheet = gc.open('Scribble Collector')
 worksheet = sheet.sheet1
 
-email_list = worksheet.col_values(5)
+email_list = worksheet.col_values(4)
 
 unique_email_list =[]
 
 for x in email_list:
+    if x is '':
+      continue
     if x not in unique_email_list:
         unique_email_list.append(x)
 
-unique_email_list.remove("Mail of that person")
-unique_email_list.remove("")
+unique_email_list.remove("Recipient's Email")
 
 for x in unique_email_list:
     cell_list = worksheet.findall(x)
@@ -33,28 +34,70 @@ for x in unique_email_list:
     message_arr = []
     for cell in cell_list:
         val = str(cell).split(" ")[1]
-        if val.split('C')[1] == '5' :
+        if val.split('C')[1] == '4' :
             value = val.split("R")[1].split("C")[0]
             person['at_rows'].append(value)
     
     for row in person['at_rows'] :
         Row = worksheet.row_values(row)
-        if len(Row) >= 7 :
-            # print('input Image available')
-            ImageId = Row[6].split("=")
-            ImageUrl = 'https://drive.google.com/uc?id='+ImageId[1]+'&export=download'
-            # print(ImageUrl)
-        else:
-             # print('Image not available')
-            ImageUrl = 'https://drive.google.com/uc?id=1oC6ASFi-dOue4l6yc2ADbcVcBX-cYtey&export=download'
-
-        worksheet.update_cell(row,8, 'mailed')
         scribble = {
             'Sender' : Row[2],
-            'Receiver' : Row[3],
-            'Message' : Row[5],
-            'ImageUrl' :ImageUrl,
-            'html_message' : """
+            'Message' : Row[4],
+            'html_message': " ",
+        }
+        if len(Row) >= 6 :
+            # print('input Image available')
+            ImageId = Row[5].split("=")
+            ImageUrl = 'https://drive.google.com/uc?id='+ImageId[1]+'&export=download'
+            
+            scribble['html_message']= """
+            <div style="background-color:transparent;">
+            <div class="block-grid"
+              style="Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: transparent;">
+              <div style="border-collapse: collapse;display: table;width: 100%;background-color:transparent;">
+                <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:transparent;"><tr><td align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px"><tr class="layout-full-width" style="background-color:transparent"><![endif]-->
+                <!--[if (mso)|(IE)]><td align="center" width="600" style="background-color:transparent;width:600px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top:0px; padding-bottom:0px;"><![endif]-->
+                <div class="col num12"
+                  style="min-width: 320px; max-width: 600px; display: table-cell; vertical-align: top; width: 600px;">
+                  <div style="width:100% !important;">
+                    <!--[if (!mso)&(!IE)]><!-->
+                    <div
+                      style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:0px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
+                      <!--<![endif]-->
+                      <table border="0" cellpadding="0" cellspacing="0" class="divider" role="presentation"
+                        style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;"
+                        valign="top" width="100%">
+                        <tbody>
+                          <tr style="vertical-align: top;" valign="top">
+                            <td class="divider_inner"
+                              style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px;"
+                              valign="top">
+                              <table align="center" border="0" cellpadding="0" cellspacing="0" class="divider_content"
+                                height="40" role="presentation"
+                                style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 0px solid transparent; height: 40px; width: 100%;"
+                                valign="top" width="100%">
+                                <tbody>
+                                  <tr style="vertical-align: top;" valign="top">
+                                    <td height="40"
+                                      style="word-break: break-word; vertical-align: top; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;"
+                                      valign="top"><span></span></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <!--[if (!mso)&(!IE)]><!-->
+                    </div>
+                    <!--<![endif]-->
+                  </div>
+                </div>
+                <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+                <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+              </div>
+            </div>
+          </div>
             <div style="background-color:transparent;">
             <div class="block-grid"
               style="Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;">
@@ -146,7 +189,7 @@ for x in unique_email_list:
                           style="line-height: 1.2; font-size: 12px; color: #000000; font-family: Nunito, Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 14px;">
                           <p
                             style="font-size: 18px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 22px; margin: 0;">
-                            <span style="font-size: 18px;">From :"""+ Row[2]+"""  </span></p>
+                            <span style="font-size: 18px;">From : """+ Row[2]+"""  </span></p>
                         </div>
                       </div>
                       <!--[if mso]></td></tr></table><![endif]-->
@@ -156,8 +199,8 @@ for x in unique_email_list:
                         <div
                           style="line-height: 1.5; font-size: 12px; color: #676767; font-family: Nunito, Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 18px;">
                           <p
-                            style="font-size: 14px; line-height: 1.5; word-break: break-word; mso-line-height-alt: 21px; margin: 0;">
-                            """+Row[5]+"""</p>
+                            style="font-size: 14px; font-family: 'Marck Script', cursive; line-height: 1.5; word-break: break-word; mso-line-height-alt: 21px; margin: 0;">
+                            """+Row[4]+"""</p>
                         </div>
                       </div>
                       <!--[if mso]></td></tr></table><![endif]-->
@@ -265,14 +308,120 @@ for x in unique_email_list:
               </div>
             </div>
           </div>
-            
-            
             """
-        }
+  
+        else:
+          scribble['html_message'] = """ 
+          
+          <div style="background-color:transparent;">
+            <div class="block-grid"
+              style="Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;">
+              <div style="border-collapse: collapse;display: table;width: 100%;background-color:#ffffff;">
+                <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:transparent;"><tr><td align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px"><tr class="layout-full-width" style="background-color:#ffffff"><![endif]-->
+                <!--[if (mso)|(IE)]><td align="center" width="600" style="background-color:#ffffff;width:600px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top:40px; padding-bottom:20px;"><![endif]-->
+                <div class="col num12"
+                  style="min-width: 320px; max-width: 600px; display: table-cell; vertical-align: top; width: 600px;">
+                  <div style="width:100% !important;">
+                    <!--[if (!mso)&(!IE)]><!-->
+                    <div
+                      style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:40px; padding-bottom:20px; padding-right: 0px; padding-left: 0px;">
+                      <!--<![endif]-->
+                      <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 5px; padding-left: 5px; padding-top: 5px; padding-bottom: 5px; font-family: Arial, sans-serif"><![endif]-->
+                      <div
+                        style="color:#000000;font-family:Nunito, Arial, Helvetica Neue, Helvetica, sans-serif;line-height:1.2;padding-top:5px;padding-right:5px;padding-bottom:5px;padding-left:5px;">
+                        <div
+                          style="line-height: 1.2; font-size: 12px; color: #000000; font-family: Nunito, Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 14px;">
+                          <p
+                            style="line-height: 1.2; word-break: break-word; text-align: center; font-size: 18px; mso-line-height-alt: 22px; margin: 0;">
+                            <span style="font-size: 18px;">From : """+ Row[2] +"""</span></p>
+                        </div>
+                      </div>
+                      <!--[if mso]></td></tr></table><![endif]-->
+                      <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px; font-family: Arial, sans-serif"><![endif]-->
+                      <div
+                        style="color:#676767;font-family:Nunito, Arial, Helvetica Neue, Helvetica, sans-serif;line-height:1.5;padding-top:10px;padding-right:5%;padding-bottom:10px;padding-left:5%;">
+                        <div
+                          style="line-height: 1.5; font-size: 12px; color: #676767; font-family: Nunito, Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 18px;">
+                          <p
+                            style="font-size: 14px; font-family: 'Marck Script', cursive; line-height: 1.5; word-break: break-word; text-align: center; mso-line-height-alt: 21px; margin: 0;">
+                            """+ Row[4] +"""</p>
+                        </div>
+                      </div>
+                      <!--[if mso]></td></tr></table><![endif]-->
+                      <!--[if (!mso)&(!IE)]><!-->
+                    </div>
+                    <!--<![endif]-->
+                  </div>
+                </div>
+                <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+                <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+              </div>
+            </div>
+          </div>
+          <div style="background-color:transparent;">
+            <div class="block-grid"
+              style="Margin: 0 auto; min-width: 320px; max-width: 600px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: #ffffff;">
+              <div style="border-collapse: collapse;display: table;width: 100%;background-color:#ffffff;">
+                <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:transparent;"><tr><td align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px"><tr class="layout-full-width" style="background-color:#ffffff"><![endif]-->
+                <!--[if (mso)|(IE)]><td align="center" width="600" style="background-color:#ffffff;width:600px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top:0px; padding-bottom:0px;"><![endif]-->
+                <div class="col num12"
+                  style="min-width: 320px; max-width: 600px; display: table-cell; vertical-align: top; width: 600px;">
+                  <div style="width:100% !important;">
+                    <!--[if (!mso)&(!IE)]><!-->
+                    <div
+                      style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:0px; padding-bottom:0px; padding-right: 0px; padding-left: 0px;">
+                      <!--<![endif]-->
+                      <table border="0" cellpadding="0" cellspacing="0" class="divider" role="presentation"
+                        style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;"
+                        valign="top" width="100%">
+                        <tbody>
+                          <tr style="vertical-align: top;" valign="top">
+                            <td class="divider_inner"
+                              style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px;"
+                              valign="top">
+                              <table align="center" border="0" cellpadding="0" cellspacing="0" class="divider_content"
+                                height="40" role="presentation"
+                                style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 0px solid transparent; height: 40px; width: 100%;"
+                                valign="top" width="100%">
+                                <tbody>
+                                  <tr style="vertical-align: top;" valign="top">
+                                    <td height="40"
+                                      style="word-break: break-word; vertical-align: top; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;"
+                                      valign="top"><span></span></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <!--[if (!mso)&(!IE)]><!-->
+                    </div>
+                    <!--<![endif]-->
+                  </div>
+                </div>
+                <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
+                <!--[if (mso)|(IE)]></td></tr></table></td></tr></table><![endif]-->
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          """
+
+
+
+
+
+        worksheet.update_cell(row,8, 'mailed')
+        
         person['scribbles'].append(scribble)
     
     for scribble in person['scribbles'] :
         message_arr.append(scribble['html_message'])
+
+
 
     # print(message_arr)
     message_list = " ".join(message_arr)
@@ -280,7 +429,7 @@ for x in unique_email_list:
     # print(message_list)
 
     msg = EmailMessage()
-    msg['Subject'] = 'Hey !, you have some new scribbles'
+    msg['Subject'] = 'Scribbles for you!'
     msg['From'] = EMAIL_ADDRESS
     msg['To'] = person['email']
     msg.set_content('You have a new scribble')
@@ -307,6 +456,7 @@ for x in unique_email_list:
     <link href="https://fonts.googleapis.com/css?family=Droid+Serif" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Marck+Script&display=swap" rel="stylesheet">
     <!--<![endif]-->
     <style type="text/css">
         body {
@@ -451,20 +601,12 @@ for x in unique_email_list:
                             style="line-height: 1.2; font-size: 12px; color: #000000; font-family: Nunito, Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 14px;">
                             <p
                                 style="font-size: 24px; line-height: 1.2; word-break: break-word; text-align: center; mso-line-height-alt: 29px; margin: 0;">
-                                <span style="font-size: 24px;"><strong>Hey !!</strong></span></p>
+                                <span style="font-size: 24px;"><strong>Hey !</strong></span></p>
                             </div>
                         </div>
                         <!--[if mso]></td></tr></table><![endif]-->
                         <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px; font-family: Arial, sans-serif"><![endif]-->
-                        <div
-                            style="color:#000000;font-family:Nunito, Arial, Helvetica Neue, Helvetica, sans-serif;line-height:1.2;padding-top:0px;padding-right:0px;padding-bottom:0px;padding-left:0px;">
-                            <div
-                            style="line-height: 1.2; font-size: 12px; color: #000000; font-family: Nunito, Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 14px;">
-                            <p
-                                style="font-size: 14px; line-height: 1.2; word-break: break-word; text-align: center; mso-line-height-alt: 17px; margin: 0;">
-                                <em><span style="font-size: 30px;"><strong>Receiver</strong></span></em></p>
-                            </div>
-                        </div>
+                        
                         <!--[if mso]></td></tr></table><![endif]-->
                         <table border="0" cellpadding="0" cellspacing="0" class="divider" role="presentation"
                             style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;"
@@ -497,8 +639,8 @@ for x in unique_email_list:
                             style="line-height: 1.5; font-size: 12px; color: #555555; font-family: Nunito, Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 18px;">
                             <p
                                 style="font-size: 16px; line-height: 1.5; word-break: break-word; text-align: center; mso-line-height-alt: 24px; margin: 0;">
-                                <span style="font-size: 16px;">A time to relive memories, and let your words light up someone's day, scribble night is back  with a tiny twist this time. 
-    We are going virtual. But the essence remains same, so here's to scribbles and joy </span></p>
+                                <span style="font-size: 16px;">Time relive memories, and let your words light up someone's day, scribble night is back  with a tiny twist this time. 
+              We are going virtual. But the essence remains same, so here's to scribbles and joy </span></p>
                             </div>
                         </div>
                         <!--[if mso]></td></tr></table><![endif]-->
