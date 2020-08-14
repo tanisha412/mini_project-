@@ -177,21 +177,10 @@ for x in unique_email_list:
                 <!--[if (mso)|(IE)]></td><td align="center" width="300" style="background-color:#ffffff;width:300px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" valign="top"><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 20px; padding-left: 20px; padding-top:25px; padding-bottom:20px;"><![endif]-->
                 <div class="col num6"
                   style="max-width: 320px; min-width: 300px; display: table-cell; vertical-align: top; width: 300px;">
-                  <div style="width:100% !important;">
+                  <div style="width:100% !important;text-align:center !important;">
                     <!--[if (!mso)&(!IE)]><!-->
                     <div
                       style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:25px; padding-bottom:20px; padding-right: 20px; padding-left: 20px;">
-                      <!--<![endif]-->
-                      <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 15px; padding-bottom: 0px; font-family: Arial, sans-serif"><![endif]-->
-                      <div
-                        style="color:#000000;font-family:Nunito, Arial, Helvetica Neue, Helvetica, sans-serif;line-height:1.2;padding-top:15px;padding-right:10px;padding-bottom:0px;padding-left:10px;">
-                        <div
-                          style="line-height: 1.2; font-size: 12px; color: #000000; font-family: Nunito, Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 14px;">
-                          <p
-                            style="font-size: 18px; line-height: 1.2; word-break: break-word; mso-line-height-alt: 22px; margin: 0;">
-                            <span style="font-size: 18px;">From : """+ Row[2]+"""  </span></p>
-                        </div>
-                      </div>
                       <!--[if mso]></td></tr></table><![endif]-->
                       <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 10px; padding-top: 5px; padding-bottom: 5px; font-family: Arial, sans-serif"><![endif]-->
                       <div
@@ -199,8 +188,9 @@ for x in unique_email_list:
                         <div
                           style="line-height: 1.5; font-size: 12px; color: #676767; font-family: Nunito, Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 18px;">
                           <p
-                            style="font-size: 14px; font-family: 'Marck Script', cursive; line-height: 1.5; word-break: break-word; mso-line-height-alt: 21px; margin: 0;">
-                            """+Row[4]+"""</p>
+                            style="font-size: 14px; line-height: 1.5; word-break: break-word; mso-line-height-alt: 21px; margin: 0;">
+                             """+ Row[4] +"""<br>
+                            - <i>"""+Row[2] +"""</i>
                         </div>
                       </div>
                       <!--[if mso]></td></tr></table><![endif]-->
@@ -325,17 +315,6 @@ for x in unique_email_list:
                     <!--[if (!mso)&(!IE)]><!-->
                     <div
                       style="border-top:0px solid transparent; border-left:0px solid transparent; border-bottom:0px solid transparent; border-right:0px solid transparent; padding-top:40px; padding-bottom:20px; padding-right: 0px; padding-left: 0px;">
-                      <!--<![endif]-->
-                      <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 5px; padding-left: 5px; padding-top: 5px; padding-bottom: 5px; font-family: Arial, sans-serif"><![endif]-->
-                      <div
-                        style="color:#000000;font-family:Nunito, Arial, Helvetica Neue, Helvetica, sans-serif;line-height:1.2;padding-top:5px;padding-right:5px;padding-bottom:5px;padding-left:5px;">
-                        <div
-                          style="line-height: 1.2; font-size: 12px; color: #000000; font-family: Nunito, Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 14px;">
-                          <p
-                            style="line-height: 1.2; word-break: break-word; text-align: center; font-size: 18px; mso-line-height-alt: 22px; margin: 0;">
-                            <span style="font-size: 18px;">From : """+ Row[2] +"""</span></p>
-                        </div>
-                      </div>
                       <!--[if mso]></td></tr></table><![endif]-->
                       <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 0px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px; font-family: Arial, sans-serif"><![endif]-->
                       <div
@@ -343,8 +322,10 @@ for x in unique_email_list:
                         <div
                           style="line-height: 1.5; font-size: 12px; color: #676767; font-family: Nunito, Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 18px;">
                           <p
-                            style="font-size: 14px; font-family: 'Marck Script', cursive; line-height: 1.5; word-break: break-word; text-align: center; mso-line-height-alt: 21px; margin: 0;">
-                            """+ Row[4] +"""</p>
+                            style="font-size: 14px; line-height: 1.5; word-break: break-word; text-align: center; mso-line-height-alt: 21px; margin: 0;">
+                            """+ Row[4] +"""<br>
+                            - <i>"""+Row[2] +"""</i>
+                          </p>
                         </div>
                       </div>
                       <!--[if mso]></td></tr></table><![endif]-->
@@ -414,7 +395,7 @@ for x in unique_email_list:
 
 
 
-        worksheet.update_cell(row,8, 'mailed')
+        worksheet.update_cell(row,7, 'mailed')
         
         person['scribbles'].append(scribble)
     
@@ -601,7 +582,7 @@ for x in unique_email_list:
                             style="line-height: 1.2; font-size: 12px; color: #000000; font-family: Nunito, Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 14px;">
                             <p
                                 style="font-size: 24px; line-height: 1.2; word-break: break-word; text-align: center; mso-line-height-alt: 29px; margin: 0;">
-                                <span style="font-size: 24px;"><strong>Hello !</strong></span></p>
+                                <span style="font-size: 24px;"><strong>Hey!</strong></span></p>
                             </div>
                         </div>
                         <!--[if mso]></td></tr></table><![endif]-->
@@ -639,8 +620,8 @@ for x in unique_email_list:
                             style="line-height: 1.5; font-size: 12px; color: #555555; font-family: Nunito, Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 18px;">
                             <p
                                 style="font-size: 16px; line-height: 1.5; word-break: break-word; text-align: center; mso-line-height-alt: 24px; margin: 0;">
-                                <span style="font-size: 16px;">A time to relive memories, and let your words light up someone's day, scribble night is back  with a tiny twist this time. 
-              We are going virtual. But the essence remains same, so here's to scribbles and joy </span></p>
+                                <span style="font-size: 16px;">Time to relive memories, and let your words light up someone's day, scribble night is back  with a tiny twist this time. 
+              We are going virtual. But the essence remains same, so here's to scribbles and joy! </span></p>
                             </div>
                         </div>
                         <!--[if mso]></td></tr></table><![endif]-->
