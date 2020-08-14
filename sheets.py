@@ -414,7 +414,7 @@ for x in unique_email_list:
 
 
 
-        worksheet.update_cell(row,8, 'mailed')
+        worksheet.update_cell(row,7, 'mailed')
         
         person['scribbles'].append(scribble)
     
